@@ -1,69 +1,67 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Shield, Wrench, BarChart3, Activity, Network } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { PageHero } from "@/components/layout/PageHero";
+import { ArrowRight } from "lucide-react";
 import { servicePages } from "@/lib/data/services";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Panel, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Serviços",
-  description:
-    "Serviços especializados em manutenção, metrologia, paradas programadas e mais.",
+  description: "Serviços especializados em manutenção, metrologia, paradas programadas e mais.",
 };
 
-const icons: Record<string, React.ReactNode> = {
-  "paradas-programadas": <Shield className="w-7 h-7" />,
-  manutencao: <Wrench className="w-7 h-7" />,
-  metrologia: <BarChart3 className="w-7 h-7" />,
-  "servicos-em-campo": <Activity className="w-7 h-7" />,
-  "tecnologia-da-informacao": <Network className="w-7 h-7" />,
-};
+const stats = [
+  { value: "42.027", label: "Equipamentos atendidos" },
+  { value: "297.000+", label: "Horas de serviço" },
+  { value: "1.630", label: "Atendimentos técnicos" },
+];
 
 export default function ServicosPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Suporte de campo"
         title="Serviços"
-        subtitle="Suporte técnico especializado para manutenção, metrologia e diagnóstico de equipamentos industriais"
+        subtitle="Cobertura técnica para paradas, manutenção, metrologia, campo e infraestrutura de TI industrial."
         breadcrumbs={[{ label: "Serviços" }]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicePages.map((service) => (
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <div className="space-y-3 lg:col-span-4">
+            <h2 className="font-display text-3xl font-bold text-zinc-900">Jornada de suporte contínuo</h2>
+            <p className="text-zinc-600">Do planejamento de intervenção ao relatório técnico final, com governança operacional e rastreabilidade.</p>
+          </div>
+
+          <div className="space-y-3 lg:col-span-8">
+            {servicePages.map((service, index) => (
               <Link key={service.slug} href={`/servicos/${service.slug}`}>
-                <Card className="h-full border border-border hover-lift cursor-pointer group">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
-                      {icons[service.slug] || <Wrench className="w-7 h-7" />}
-                    </div>
-                    <h2 className="font-display font-bold text-xl text-foreground mb-2">
-                      {service.name}
-                    </h2>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">
-                      {service.shortDescription}
-                    </p>
-                    <span className="flex items-center gap-1 text-xs font-body font-medium text-primary group-hover:gap-2 transition-all">
-                      Ver detalhes <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </CardContent>
-                </Card>
+                <div className="group grid gap-3 rounded-2xl border border-zinc-200 bg-white px-5 py-4 transition hover:bg-zinc-50 md:grid-cols-[56px_1fr_auto] md:items-center">
+                  <span className="font-mono text-xs text-zinc-400">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3 className="font-display text-2xl font-bold text-zinc-900">{service.name}</h3>
+                    <p className="text-sm text-zinc-600">{service.shortDescription}</p>
+                  </div>
+                  <span className="text-sm font-semibold text-primary group-hover:text-zinc-900">
+                    Detalhes <ArrowRight className="ml-1 inline size-4" />
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <section className="py-16 bg-primary-gradient">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="section-heading text-white mb-2">
-            42.027 equipamentos atendidos
-          </h2>
-          <p className="font-body text-white/80 text-lg">
-            297.000 horas de serviço · 1.630 atendimentos técnicos
-          </p>
-        </div>
-      </section>
-    </>
+      <Section className="border-y border-zinc-200 bg-zinc-100/70">
+        <Container className="grid gap-3 md:grid-cols-3">
+          {stats.map((item) => (
+            <Panel key={item.label} className="text-center">
+              <div className="font-display text-4xl font-bold text-zinc-900">{item.value}</div>
+              <div className="mt-1 text-xs uppercase tracking-[0.14em] text-zinc-500">{item.label}</div>
+            </Panel>
+          ))}
+        </Container>
+      </Section>
+    </main>
   );
 }

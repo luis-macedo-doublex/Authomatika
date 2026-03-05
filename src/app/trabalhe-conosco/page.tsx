@@ -1,119 +1,51 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ExternalLink, MapPin, Briefcase } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PageHero } from "@/components/layout/PageHero";
 import { company } from "@/lib/data/company";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Panel, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Trabalhe Conosco",
 };
 
-const vagas = [
-  {
-    title: "Auxiliar de Serviços Gerais",
-    location: "Narandiba, SP",
-    type: "Temporário",
-    area: "Operações",
-  },
-  {
-    title: "Montador Eletromecânico",
-    location: "Narandiba, SP",
-    type: "Temporário",
-    area: "Montagem",
-  },
-];
+const pillars = ["Foco em resultado", "Ambiente colaborativo", "Tecnologia aplicada", "Crescimento profissional"];
 
 export default function TrabalheConoscoPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Carreiras"
         title="Trabalhe Conosco"
-        subtitle="A melhor escolha para sua carreira em engenharia e automação"
+        subtitle="Faça parte de uma equipe de engenharia orientada a execução e evolução técnica contínua."
         breadcrumbs={[{ label: "Trabalhe Conosco" }]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <div className="w-12 h-1 bg-primary mb-6" />
-              <h2 className="section-heading text-foreground mb-4">
-                Faça parte do nosso time
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed mb-6">
-                Com 25 anos de história e uma atuação global, a Authomathika é
-                uma empresa de referência em soluções nas áreas de elétrica,
-                automação, instrumentação, energias renováveis e montagem
-                eletromecânica.
-              </p>
-              <p className="font-body text-muted-foreground leading-relaxed mb-8">
-                Buscamos profissionais apaixonados por engenharia, com vontade
-                de crescer e contribuir com projetos desafiadores nos mais
-                variados setores industriais.
-              </p>
-              <Button asChild size="lg" className="font-display font-semibold">
-                <Link
-                  href={company.gupy}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ver Todas as Vagas no Gupy
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <Panel className="space-y-4 lg:col-span-7">
+            <h2 className="font-display text-3xl font-bold text-zinc-900">Por que construir carreira aqui</h2>
+            <p className="text-zinc-600">Projetos de alta complexidade, cultura técnica forte e ambiente com autonomia responsável.</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {pillars.map((pillar) => (
+                <div key={pillar} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
+                  {pillar}
+                </div>
+              ))}
             </div>
-            <div>
-              <h3 className="font-display font-bold text-xl text-foreground mb-4">
-                Vagas em Aberto
-              </h3>
-              <div className="space-y-4">
-                {vagas.map((vaga) => (
-                  <Card key={vaga.title} className="border border-border">
-                    <CardContent className="p-5">
-                      <div className="flex items-start justify-between gap-2 mb-3">
-                        <h4 className="font-display font-bold text-lg text-foreground">
-                          {vaga.title}
-                        </h4>
-                        <Badge
-                          variant="secondary"
-                          className="font-body text-xs shrink-0"
-                        >
-                          {vaga.type}
-                        </Badge>
-                      </div>
-                      <div className="flex flex-wrap gap-3 mb-3">
-                        <span className="flex items-center gap-1 text-xs font-body text-muted-foreground">
-                          <MapPin className="w-3 h-3" /> {vaga.location}
-                        </span>
-                        <span className="flex items-center gap-1 text-xs font-body text-muted-foreground">
-                          <Briefcase className="w-3 h-3" /> {vaga.area}
-                        </span>
-                      </div>
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="font-body font-medium"
-                      >
-                        <Link
-                          href={company.gupy}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Candidatar-se{" "}
-                          <ExternalLink className="w-3 h-3 ml-1" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+          </Panel>
+
+          <Panel className="space-y-4 lg:col-span-5">
+            <h3 className="font-display text-2xl font-bold text-zinc-900">Vagas via Gupy</h3>
+            <p className="text-sm text-zinc-600">Acompanhe oportunidades abertas e candidate-se na nossa plataforma oficial de recrutamento.</p>
+            <Button asChild className="w-full rounded-full font-semibold">
+              <a href={company.gupy} target="_blank" rel="noopener noreferrer">
+                Ver vagas disponíveis <ArrowUpRight className="size-4" />
+              </a>
+            </Button>
+          </Panel>
+        </Container>
+      </Section>
+    </main>
   );
 }

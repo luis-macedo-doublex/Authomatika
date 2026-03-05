@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/layout/PageHero";
 import { timeline } from "@/lib/data/company";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Linha do Tempo",
@@ -8,41 +9,30 @@ export const metadata: Metadata = {
 
 export default function LinhaDoTempoPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Histórico"
         title="Linha do Tempo"
-        subtitle="25 anos de história, crescimento e excelência no setor industrial brasileiro"
+        subtitle="Marcos de evolução da Authomathika desde 1999."
         breadcrumbs={[
           { label: "Empresa", href: "/empresa" },
           { label: "Linha do Tempo" },
         ]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="relative">
-              <div className="absolute left-7 top-0 bottom-0 w-px bg-border" />
-              <div className="space-y-2">
-                {timeline.map((item) => (
-                  <div
-                    key={item.year}
-                    className="relative flex items-start gap-6"
-                  >
-                    <div className="relative z-10 w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white font-display font-bold text-sm shrink-0">
-                      {item.year}
-                    </div>
-                    <div className="flex-1 pt-3 pb-8">
-                      <p className="font-body text-foreground leading-relaxed">
-                        {item.event}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+      <Section>
+        <Container>
+          <div className="relative ml-2 border-l-2 border-zinc-200 pl-8">
+            {timeline.map((item) => (
+              <article key={`${item.year}-${item.event}`} className="relative mb-8 rounded-2xl border border-zinc-200 bg-white p-5">
+                <span className="absolute -left-[41px] top-6 size-4 rounded-full border-2 border-indigo-300 bg-indigo-100" />
+                <div className="font-display text-3xl font-bold text-primary">{item.year}</div>
+                <p className="mt-1 text-sm text-zinc-600">{item.event}</p>
+              </article>
+            ))}
           </div>
-        </div>
-      </section>
-    </>
+        </Container>
+      </Section>
+    </main>
   );
 }

@@ -1,67 +1,55 @@
 import type { Metadata } from "next";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PageHero } from "@/components/layout/PageHero";
+import { Calendar, Clock3 } from "lucide-react";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Section } from "@/components/site/primitives";
 
-export const metadata: Metadata = {
-  title: "Blog",
-};
+export const metadata: Metadata = { title: "Blog" };
 
 const posts = [
   {
-    title:
-      "10 Dicas para Escolher seu Fornecedor de Painéis e Quadros Elétricos",
+    title: "10 Dicas para Escolher seu Fornecedor de Painéis e Quadros Elétricos",
     date: "2022",
     category: "Elétrica",
-    excerpt:
-      "Escolher o fornecedor certo de painéis elétricos é uma decisão estratégica. Veja os critérios essenciais para fazer a melhor escolha para sua empresa.",
+    readTime: "7 min",
+    excerpt: "Critérios de engenharia para avaliar fornecedores com foco em confiabilidade, prazo e suporte.",
   },
   {
     title: "Como o DCLT Melhora a Eficiência de uma Usina de Açúcar e Etanol?",
     date: "2021",
     category: "Produtos",
-    excerpt:
-      "O DCLT-1C trouxe uma revolução na medição contínua do nível do chute Donnelly. Entenda como este produto pode aumentar a eficiência da sua usina.",
+    readTime: "5 min",
+    excerpt: "Aplicação prática de medição contínua no chute Donnelly para ganho operacional.",
   },
 ];
 
 export default function BlogPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Conteúdo técnico"
         title="Blog"
-        subtitle="Artigos técnicos e insights sobre engenharia, automação e o setor industrial"
+        subtitle="Artigos práticos sobre elétrica, automação e performance industrial."
         breadcrumbs={[
           { label: "Media Center", href: "/media-center" },
           { label: "Blog" },
         ]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-            {posts.map((post) => (
-              <Card key={post.title} className="border border-border hover-lift">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Badge className="font-body text-xs bg-primary/10 text-primary border-primary/20">
-                      {post.category}
-                    </Badge>
-                    <span className="font-body text-xs text-muted-foreground">
-                      {post.date}
-                    </span>
-                  </div>
-                  <h2 className="font-display font-bold text-xl text-foreground mb-3 leading-tight">
-                    {post.title}
-                  </h2>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+
+      <Section>
+        <Container className="space-y-4">
+          {posts.map((post) => (
+            <article key={post.title} className="rounded-3xl border border-zinc-200 bg-white p-6">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
+                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-primary">{post.category}</span>
+                <span className="inline-flex items-center gap-1"><Calendar className="size-3.5 text-primary" /> {post.date}</span>
+                <span className="inline-flex items-center gap-1"><Clock3 className="size-3.5 text-primary" /> {post.readTime}</span>
+              </div>
+              <h2 className="mt-3 font-display text-3xl font-bold text-zinc-900">{post.title}</h2>
+              <p className="mt-2 text-sm text-zinc-600">{post.excerpt}</p>
+            </article>
+          ))}
+        </Container>
+      </Section>
+    </main>
   );
 }

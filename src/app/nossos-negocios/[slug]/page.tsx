@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
-import { CheckCircle, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { notFound } from "next/navigation";
+import { ArrowRight, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PageHero } from "@/components/layout/PageHero";
 import { businessAreas, getBusinessArea } from "@/lib/data/businesses";
 import { serviceSchema } from "@/lib/schemas";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Eyebrow, Panel, Section } from "@/components/site/primitives";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return businessAreas.map((b) => ({ slug: b.slug }));
+  return businessAreas.map((area) => ({ slug: area.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -26,22 +25,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${area.name} – Engenharia Industrial`,
     description: area.description,
-    keywords: [
-      area.name,
-      "Authomathika",
-      "engenharia industrial",
-      "Sertãozinho SP",
-      ...(area.partners ?? []),
-    ],
-    openGraph: {
-      title: `${area.name} | Authomathika`,
-      description: area.shortDescription,
-      url: `https://www.authomathika.com.br/nossos-negocios/${slug}`,
-      type: "website",
-    },
-    alternates: {
-      canonical: `https://www.authomathika.com.br/nossos-negocios/${slug}`,
-    },
   };
 }
 
@@ -58,14 +41,11 @@ export default async function BusinessPage({ params }: Props) {
   });
 
   return (
-    <>
-      <Script
-        id={`schema-service-${slug}`}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+    <main>
+      <Script id={`schema-service-${slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      <PageHero
+      <PageIntro
+        tag="Divisão"
         title={area.name}
         subtitle={area.shortDescription}
         breadcrumbs={[
@@ -74,103 +54,55 @@ export default async function BusinessPage({ params }: Props) {
         ]}
       />
 
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
-              <div className="w-12 h-1 bg-primary mb-6" aria-hidden="true" />
-              <h2 className="section-heading text-foreground mb-4">
-                Sobre esta Divisão
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed text-lg mb-8">
-                {area.description}
-              </p>
-              <h3 className="font-display font-bold text-xl text-foreground mb-4">
-                Serviços &amp; Soluções
-              </h3>
-              <ul className="space-y-3" role="list">
-                {area.services.map((service) => (
-                  <li key={service} className="flex items-start gap-3">
-                    <CheckCircle
-                      className="w-5 h-5 text-primary shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <span className="font-body text-foreground">{service}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <div className="space-y-6 lg:col-span-8">
+            <Panel className="space-y-4">
+              <Eyebrow>Contexto técnico</Eyebrow>
+              <p className="text-zinc-600">{area.description}</p>
+            </Panel>
 
-            <div className="space-y-4">
-              <Card className="border border-border">
-                <CardContent className="p-6">
-                  <h3 className="font-display font-bold text-lg text-foreground mb-4">
-                    Números desta Divisão
-                  </h3>
-                  <div className="space-y-4">
-                    {area.metrics.map((m) => (
-                      <div
-                        key={m.label}
-                        className="text-center p-4 bg-muted/30 rounded-lg"
-                      >
-                        <div className="font-display font-bold text-3xl text-primary mb-1">
-                          {m.value}
-                        </div>
-                        <div className="font-body text-xs text-muted-foreground">
-                          {m.label}
-                        </div>
-                      </div>
-                    ))}
+            <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white">
+              <div className="border-b border-zinc-200 px-5 py-3 text-xs uppercase tracking-[0.14em] text-zinc-500">Serviços e soluções</div>
+              <div className="divide-y divide-zinc-200">
+                {area.services.map((item, idx) => (
+                  <div key={item} className="grid gap-2 px-5 py-4 md:grid-cols-[48px_1fr] md:items-center">
+                    <span className="font-mono text-xs text-zinc-400">{String(idx + 1).padStart(2, "0")}</span>
+                    <span className="text-sm text-zinc-700">{item}</span>
                   </div>
-                </CardContent>
-              </Card>
-
-              {area.partners && (
-                <Card className="border border-border">
-                  <CardContent className="p-6">
-                    <h3 className="font-display font-bold text-lg text-foreground mb-4">
-                      Parceiros Tecnológicos
-                    </h3>
-                    <ul
-                      className="flex flex-wrap gap-2"
-                      role="list"
-                      aria-label="Parceiros homologados"
-                    >
-                      {area.partners.map((partner) => (
-                        <li key={partner}>
-                          <Badge
-                            variant="outline"
-                            className="font-body text-xs"
-                          >
-                            {partner}
-                          </Badge>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-
-              <Card className="border border-primary/20 bg-primary/5">
-                <CardContent className="p-6">
-                  <h3 className="font-display font-bold text-lg text-foreground mb-2">
-                    Solicite um Orçamento
-                  </h3>
-                  <p className="font-body text-sm text-muted-foreground mb-4">
-                    Entre em contato com nossa equipe para discutir seu projeto.
-                  </p>
-                  <Button asChild className="w-full font-display font-semibold">
-                    <Link href="/contato/solicitacao-de-orcamento">
-                      Solicitar Orçamento{" "}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+
+          <aside className="space-y-6 lg:col-span-4">
+            <Panel className="space-y-3">
+              <Eyebrow>Indicadores da divisão</Eyebrow>
+              {area.metrics.map((metric) => (
+                <div key={metric.label} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+                  <div className="text-xs uppercase tracking-[0.14em] text-zinc-500">{metric.label}</div>
+                  <div className="font-display text-2xl font-bold text-zinc-900">{metric.value}</div>
+                </div>
+              ))}
+            </Panel>
+
+            <Panel className="space-y-4">
+              <h3 className="font-display text-xl font-bold text-zinc-900">Abrir estudo de escopo</h3>
+              <Button asChild className="w-full rounded-full font-semibold">
+                <Link href="/contato/solicitacao-de-orcamento">
+                  Solicitar orçamento <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+              <a href="tel:+551635134000" className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                <Phone className="size-4 text-primary" /> (16) 3513-4000
+              </a>
+              <a href="mailto:comercial@authomathika.com.br" className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                <Mail className="size-4 text-primary" /> comercial@authomathika.com.br
+              </a>
+            </Panel>
+          </aside>
+        </Container>
+      </Section>
+    </main>
   );
 }

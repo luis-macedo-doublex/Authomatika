@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteHeader } from "@/components/navigation/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { organizationSchema, websiteSchema } from "@/lib/schemas";
 
 const SITE_URL = "https://www.authomathika.com.br";
@@ -107,9 +107,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <Header />
-        <div className="pt-[96px]">{children}</div>
-        <Footer />
+        <SiteHeader />
+        <div>{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

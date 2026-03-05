@@ -1,156 +1,62 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { PageHero } from "@/components/layout/PageHero";
-import { company } from "@/lib/data/company";
+import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Panel, Section } from "@/components/site/primitives";
 
-export const metadata: Metadata = {
-  title: "Fale Conosco",
-};
+export const metadata: Metadata = { title: "Fale Conosco" };
+
+const channels = [
+  { Icon: Phone, title: "Telefone", value: "(16) 3513-4000", details: "Atendimento comercial" },
+  { Icon: Mail, title: "E-mail", value: "comercial@authomathika.com.br", details: "Solicitações técnicas" },
+  { Icon: MessageSquare, title: "SAC", value: "sac.atm@authomathika.com.br", details: "Atendimento ao cliente" },
+  { Icon: MapPin, title: "Endereço", value: "Sertãozinho - SP", details: "R. Ivone Fernandes Bernardi, 504" },
+];
 
 export default function FaleConoscoPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Atendimento"
         title="Fale Conosco"
-        subtitle="Entre em contato com nossa equipe"
+        subtitle="Canal direto para dúvidas, suporte e relacionamento comercial."
         breadcrumbs={[
           { label: "Contato", href: "/contato" },
           { label: "Fale Conosco" },
         ]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div>
-              <div className="w-12 h-1 bg-primary mb-6" />
-              <h2 className="section-heading text-foreground mb-4">
-                Entre em Contato
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed mb-8">
-                Nossa equipe está pronta para atender sua solicitação. Envie uma
-                mensagem e retornaremos em breve.
-              </p>
-              <div className="space-y-4">
-                <a
-                  href="tel:+551635134000"
-                  className="flex items-center gap-3 font-body text-foreground hover:text-primary transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground">Telefone</div>
-                    <div className="font-medium">{company.phone}</div>
-                  </div>
-                </a>
-                <a
-                  href={`mailto:${company.email.comercial}`}
-                  className="flex items-center gap-3 font-body text-foreground hover:text-primary transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground">
-                      E-mail Comercial
-                    </div>
-                    <div className="font-medium">{company.email.comercial}</div>
-                  </div>
-                </a>
-                <a
-                  href={`mailto:${company.email.sac}`}
-                  className="flex items-center gap-3 font-body text-foreground hover:text-primary transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground">SAC</div>
-                    <div className="font-medium">{company.email.sac}</div>
-                  </div>
-                </a>
-                <div className="flex items-center gap-3 font-body text-foreground">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground">Endereço</div>
-                    <div className="font-medium text-sm">{company.address}</div>
-                  </div>
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <Panel className="space-y-3 lg:col-span-5">
+            {channels.map((item) => (
+              <div key={item.title} className="flex items-start gap-3 rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+                <item.Icon className="mt-0.5 size-4 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">{item.title}</p>
+                  <p className="text-sm font-semibold text-zinc-900">{item.value}</p>
+                  <p className="text-xs text-zinc-600">{item.details}</p>
                 </div>
               </div>
-            </div>
-            <Card className="border border-border">
-              <CardContent className="p-6">
-                <h3 className="font-display font-bold text-xl text-foreground mb-4">
-                  Envie uma Mensagem
-                </h3>
-                <form className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="font-body text-sm text-foreground mb-1 block">
-                        Nome *
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full border border-input rounded px-3 py-2 font-body text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                        placeholder="Seu nome"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-body text-sm text-foreground mb-1 block">
-                        Empresa
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full border border-input rounded px-3 py-2 font-body text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                        placeholder="Sua empresa"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-foreground mb-1 block">
-                      E-mail *
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full border border-input rounded px-3 py-2 font-body text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                      placeholder="seu@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-foreground mb-1 block">
-                      Telefone
-                    </label>
-                    <input
-                      type="tel"
-                      className="w-full border border-input rounded px-3 py-2 font-body text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                      placeholder="(00) 00000-0000"
-                    />
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-foreground mb-1 block">
-                      Mensagem *
-                    </label>
-                    <textarea
-                      rows={4}
-                      className="w-full border border-input rounded px-3 py-2 font-body text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-                      placeholder="Como podemos ajudar?"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-primary text-white font-display font-semibold py-2 px-4 rounded hover:bg-primary/90 transition-colors"
-                  >
-                    Enviar Mensagem
-                  </button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-    </>
+            ))}
+          </Panel>
+
+          <Panel className="lg:col-span-7">
+            <form className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2"><Label htmlFor="nome">Nome</Label><Input id="nome" className="h-11" /></div>
+                <div className="space-y-2"><Label htmlFor="email">E-mail</Label><Input id="email" type="email" className="h-11" /></div>
+              </div>
+              <div className="space-y-2"><Label htmlFor="assunto">Assunto</Label><Input id="assunto" className="h-11" /></div>
+              <div className="space-y-2"><Label htmlFor="mensagem">Mensagem</Label><Textarea id="mensagem" className="min-h-[140px]" /></div>
+              <Button type="submit" className="w-full rounded-full font-semibold">Enviar mensagem</Button>
+            </form>
+          </Panel>
+        </Container>
+      </Section>
+    </main>
   );
 }

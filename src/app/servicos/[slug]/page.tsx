@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
-import { CheckCircle, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { notFound } from "next/navigation";
+import { ArrowRight, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PageHero } from "@/components/layout/PageHero";
-import { servicePages, getServicePage } from "@/lib/data/services";
+import { getServicePage, servicePages } from "@/lib/data/services";
 import { serviceSchema } from "@/lib/schemas";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Eyebrow, Panel, Section } from "@/components/site/primitives";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return servicePages.map((s) => ({ slug: s.slug }));
+  return servicePages.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -26,23 +25,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${service.name} – Serviços Industriais`,
     description: service.description,
-    keywords: [
-      service.name,
-      "Authomathika",
-      "serviços industriais",
-      "manutenção industrial",
-      "Sertãozinho SP",
-      ...(service.certifications ?? []),
-    ],
-    openGraph: {
-      title: `${service.name} | Authomathika`,
-      description: service.shortDescription,
-      url: `https://www.authomathika.com.br/servicos/${slug}`,
-      type: "website",
-    },
-    alternates: {
-      canonical: `https://www.authomathika.com.br/servicos/${slug}`,
-    },
   };
 }
 
@@ -59,14 +41,11 @@ export default async function ServiceDetailPage({ params }: Props) {
   });
 
   return (
-    <>
-      <Script
-        id={`schema-service-detail-${slug}`}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+    <main>
+      <Script id={`schema-service-${slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      <PageHero
+      <PageIntro
+        tag="Serviço"
         title={service.name}
         subtitle={service.shortDescription}
         breadcrumbs={[
@@ -74,71 +53,71 @@ export default async function ServiceDetailPage({ params }: Props) {
           { label: service.name },
         ]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
-              <div className="w-12 h-1 bg-primary mb-6" aria-hidden="true" />
-              <h2 className="section-heading text-foreground mb-4">
-                Sobre o Serviço
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed text-lg mb-8">
-                {service.description}
-              </p>
-              <h3 className="font-display font-bold text-xl text-foreground mb-4">
-                O que oferecemos
-              </h3>
-              <ul className="space-y-3" role="list">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <CheckCircle
-                      className="w-5 h-5 text-primary shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <span className="font-body text-foreground">{feature}</span>
-                  </li>
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <div className="space-y-6 lg:col-span-8">
+            <Panel className="space-y-3">
+              <Eyebrow>Escopo</Eyebrow>
+              <p className="text-zinc-600">{service.description}</p>
+            </Panel>
+
+            <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white">
+              <div className="border-b border-zinc-200 px-5 py-3 text-xs uppercase tracking-[0.14em] text-zinc-500">Entregáveis</div>
+              <div className="divide-y divide-zinc-200">
+                {service.features.map((item, idx) => (
+                  <div key={item} className="grid gap-2 px-5 py-4 md:grid-cols-[48px_1fr] md:items-center">
+                    <span className="font-mono text-xs text-zinc-400">{String(idx + 1).padStart(2, "0")}</span>
+                    <span className="text-sm text-zinc-700">{item}</span>
+                  </div>
                 ))}
-              </ul>
-            </div>
-            <div className="space-y-4">
-              {service.certifications && (
-                <Card className="border border-border">
-                  <CardContent className="p-6">
-                    <h3 className="font-display font-bold text-lg text-foreground mb-4">
-                      Certificações
-                    </h3>
-                    <ul className="flex flex-wrap gap-2" role="list">
-                      {service.certifications.map((cert) => (
-                        <li key={cert}>
-                          <Badge className="font-body bg-primary/10 text-primary border-primary/20">
-                            {cert}
-                          </Badge>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-              <Card className="border border-primary/20 bg-primary/5">
-                <CardContent className="p-6">
-                  <h3 className="font-display font-bold text-lg text-foreground mb-2">
-                    Fale com nossa equipe
-                  </h3>
-                  <p className="font-body text-sm text-muted-foreground mb-4">
-                    Entre em contato para saber mais sobre este serviço.
-                  </p>
-                  <Button asChild className="w-full font-display font-semibold">
-                    <Link href="/contato/fale-conosco">
-                      Entrar em Contato{" "}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+
+          <aside className="space-y-6 lg:col-span-4">
+            {service.certifications?.length ? (
+              <Panel className="space-y-3">
+                <Eyebrow>Certificações</Eyebrow>
+                <div className="flex flex-wrap gap-2">
+                  {service.certifications.map((item) => (
+                    <span key={item} className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-primary">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </Panel>
+            ) : null}
+
+            <Panel className="space-y-4">
+              <h3 className="font-display text-xl font-bold text-zinc-900">Falar com especialista</h3>
+              <Button asChild className="w-full rounded-full font-semibold">
+                <Link href="/contato/fale-conosco">
+                  Abrir atendimento <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+              <a href="tel:+551635134000" className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                <Phone className="size-4 text-primary" /> (16) 3513-4000
+              </a>
+              <a href="mailto:comercial@authomathika.com.br" className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                <Mail className="size-4 text-primary" /> comercial@authomathika.com.br
+              </a>
+            </Panel>
+
+            <Panel className="space-y-3">
+              <Eyebrow>Outros serviços</Eyebrow>
+              {servicePages
+                .filter((item) => item.slug !== slug)
+                .slice(0, 4)
+                .map((item) => (
+                  <Link key={item.slug} href={`/servicos/${item.slug}`} className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                    <ArrowRight className="size-3 text-primary" /> {item.name}
+                  </Link>
+                ))}
+            </Panel>
+          </aside>
+        </Container>
+      </Section>
+    </main>
   );
 }

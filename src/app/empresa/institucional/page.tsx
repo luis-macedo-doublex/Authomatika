@@ -1,162 +1,80 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/layout/PageHero";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Award, Users, Globe } from "lucide-react";
 import { company } from "@/lib/data/company";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Eyebrow, Panel, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Institucional",
   description: "Conheça a Authomathika – engenharia integradora desde 1999.",
 };
 
+const diferencials = [
+  "Equipe multidisciplinar de engenharia e campo",
+  "Parceria estratégica TOMSA DESTIL (Espanha)",
+  "Gestão digital de serviços com rastreabilidade",
+  "Metrologia RBC com laboratórios fixos e móveis",
+  "Frota própria e operação nacional",
+  "Conformidade com normas críticas de segurança",
+];
+
 export default function InstitucionalPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Empresa"
         title="Institucional"
-        subtitle="Uma empresa completa de engenharia integradora de sistemas Elétricos e de Automação"
+        subtitle="Histórico, posicionamento e diferenciais operacionais da Authomathika."
         breadcrumbs={[
           { label: "Empresa", href: "/empresa" },
           { label: "Institucional" },
         ]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
-              <div className="w-12 h-1 bg-primary mb-6" />
-              <h2 className="section-heading text-foreground mb-4">
-                Sobre a Authomathika
-              </h2>
-              <div className="space-y-4 font-body text-muted-foreground leading-relaxed">
-                <p>
-                  Fundada em 1999 em Sertãozinho, SP, a Authomathika é uma
-                  empresa completa de engenharia integradora de sistemas
-                  Elétricos e de Automação. Com mais de 25 anos no mercado,
-                  conquistamos uma sólida reputação pela excelência técnica e
-                  pelo cumprimento responsável dos contratos.
-                </p>
-                <p>
-                  Nossa equipe é composta por engenheiros e técnicos altamente
-                  especializados, comprometidos com a entrega de soluções
-                  customizadas para os mais variados segmentos industriais.
-                  Atuamos desde o levantamento de requisitos até o
-                  comissionamento final, passando por projeto, aquisição,
-                  construção e manutenção.
-                </p>
-                <p>
-                  Somos reconhecidos pela forma responsável e clara de cumprir
-                  os contratos, trabalhando dentro da ética e profissionalismo
-                  que o mercado exige. Nossa presença no setor sucroenergético,
-                  de fertilizantes, saneamento, mineração e energias renováveis
-                  demonstra nossa capacidade de adaptação e excelência em
-                  diferentes contextos industriais.
-                </p>
-                <p>
-                  Com a certificação ISO 9001 e conformidade com as normas
-                  regulamentadoras NR-10 e NR-35, garantimos processos seguros
-                  e de qualidade em todos os projetos. Utilizamos o ERP TOTVS
-                  para gestão integrada e o sistema Serelepe para
-                  acompanhamento online de serviços em campo.
-                </p>
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <article className="space-y-5 lg:col-span-8">
+            <Panel className="space-y-4">
+              <Eyebrow>Quem somos</Eyebrow>
+              <p className="text-zinc-600">Fundada em 1999 em Sertãozinho/SP, a Authomathika atua como integradora de engenharia para sistemas elétricos, automação e implantação industrial.</p>
+              <p className="text-zinc-600">Com atuação multissetorial, nossa operação combina projeto, execução e manutenção com compromisso contratual de alta previsibilidade.</p>
+              <p className="text-zinc-600">A empresa é reconhecida por clareza técnica, ética de entrega e capacidade de escalar projetos complexos em diferentes ambientes industriais.</p>
+            </Panel>
+
+            <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white">
+              <div className="border-b border-zinc-200 px-5 py-3 text-xs uppercase tracking-[0.14em] text-zinc-500">Diferenciais</div>
+              <div className="divide-y divide-zinc-200">
+                {diferencials.map((item, idx) => (
+                  <div key={item} className="grid gap-2 px-5 py-4 md:grid-cols-[48px_1fr] md:items-center">
+                    <span className="font-mono text-xs text-zinc-400">{String(idx + 1).padStart(2, "0")}</span>
+                    <span className="text-sm text-zinc-700">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="space-y-4">
-              <Card className="border border-border">
-                <CardContent className="p-6">
-                  <h3 className="font-display font-bold text-lg text-foreground mb-4">
-                    Dados da Empresa
-                  </h3>
-                  <dl className="space-y-3">
-                    {[
-                      { label: "Fundação", value: "1999" },
-                      { label: "Presidente", value: company.president },
-                      { label: "CNPJ", value: company.cnpj },
-                      { label: "Localização", value: "Sertãozinho, SP" },
-                      { label: "Telefone", value: company.phone },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex justify-between gap-2"
-                      >
-                        <dt className="font-body text-sm text-muted-foreground">
-                          {item.label}
-                        </dt>
-                        <dd className="font-body text-sm font-medium text-foreground text-right">
-                          {item.value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </CardContent>
-              </Card>
-              <Card className="border border-border">
-                <CardContent className="p-6">
-                  <h3 className="font-display font-bold text-lg text-foreground mb-4">
-                    Certificações
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {[...company.certifications, "RBC", "ERP TOTVS"].map(
-                      (cert) => (
-                        <Badge
-                          key={cert}
-                          className="font-body bg-primary/10 text-primary border-primary/20"
-                        >
-                          {cert}
-                        </Badge>
-                      )
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
+          </article>
 
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                icon: <Users className="w-6 h-6" />,
-                title: "Equipe Especializada",
-                desc: "Engenheiros e técnicos certificados nas principais normas do setor.",
-              },
-              {
-                icon: <Award className="w-6 h-6" />,
-                title: "ISO 9001",
-                desc: "Sistema de gestão da qualidade certificado para todos os processos.",
-              },
-              {
-                icon: <Globe className="w-6 h-6" />,
-                title: "Parceria Internacional",
-                desc: "TOMSA DESTIL (Espanha, 150+ anos) como parceiro estratégico.",
-              },
-              {
-                icon: <CheckCircle className="w-6 h-6" />,
-                title: "Ética Profissional",
-                desc: "Reconhecidos pela responsabilidade e clareza no cumprimento de contratos.",
-              },
-            ].map((item) => (
-              <Card key={item.title} className="border border-border">
-                <CardContent className="p-5">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
-                    {item.icon}
-                  </div>
-                  <h3 className="font-display font-bold text-base text-foreground mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                    {item.desc}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+          <aside className="space-y-6 lg:col-span-4">
+            <Panel className="space-y-2">
+              <Eyebrow>Dados corporativos</Eyebrow>
+              <p className="text-sm text-zinc-600"><strong className="text-zinc-900">Fundação:</strong> 1999</p>
+              <p className="text-sm text-zinc-600"><strong className="text-zinc-900">Presidente:</strong> {company.president}</p>
+              <p className="text-sm text-zinc-600"><strong className="text-zinc-900">Telefone:</strong> {company.phone}</p>
+              <p className="text-sm text-zinc-600"><strong className="text-zinc-900">CNPJ:</strong> {company.cnpj}</p>
+            </Panel>
+
+            <Panel className="space-y-3">
+              <Eyebrow>Conformidades</Eyebrow>
+              <div className="flex flex-wrap gap-2">
+                {[...company.certifications, "RBC", "ERP TOTVS"].map((item) => (
+                  <span key={item} className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-primary">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </Panel>
+          </aside>
+        </Container>
+      </Section>
+    </main>
   );
 }

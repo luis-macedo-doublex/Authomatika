@@ -1,74 +1,56 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Sun, Zap, Cpu, Wrench, Settings, Building2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PageHero } from "@/components/layout/PageHero";
+import { ArrowRight } from "lucide-react";
 import { businessAreas } from "@/lib/data/businesses";
+import { PageIntro } from "@/components/layout/PageIntro";
+import { Container, Panel, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Nossos Negócios",
-  description:
-    "6 divisões especializadas em engenharia elétrica e automação industrial.",
-};
-
-const icons: Record<string, React.ReactNode> = {
-  Sun: <Sun className="w-8 h-8" />,
-  Zap: <Zap className="w-8 h-8" />,
-  Cpu: <Cpu className="w-8 h-8" />,
-  Wrench: <Wrench className="w-8 h-8" />,
-  Settings: <Settings className="w-8 h-8" />,
-  Building2: <Building2 className="w-8 h-8" />,
+  description: "Divisões especializadas em engenharia elétrica e automação industrial.",
 };
 
 export default function NossosNegociosPage() {
   return (
-    <>
-      <PageHero
+    <main>
+      <PageIntro
+        tag="Estrutura de serviços"
         title="Nossos Negócios"
-        subtitle="Seis divisões especializadas que cobrem toda a cadeia de engenharia elétrica e automação industrial"
+        subtitle="Unidades complementares para projeto, implantação e sustentação de ativos industriais."
         breadcrumbs={[{ label: "Nossos Negócios" }]}
       />
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {businessAreas.map((area) => (
-              <Link
-                key={area.slug}
-                href={`/nossos-negocios/${area.slug}`}
-              >
-                <Card className="h-full border border-border hover-lift cursor-pointer group">
-                  <CardContent className="p-8">
-                    <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:bg-primary group-hover:text-white transition-colors">
-                      {icons[area.icon]}
-                    </div>
-                    <h2 className="font-display font-bold text-2xl text-foreground mb-3">
-                      {area.name}
-                    </h2>
-                    <p className="font-body text-muted-foreground leading-relaxed mb-5 text-sm">
-                      {area.shortDescription}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {area.metrics.map((m) => (
-                        <Badge
-                          key={m.label}
-                          variant="secondary"
-                          className="font-body text-xs"
-                        >
-                          {m.value} {m.label}
-                        </Badge>
-                      ))}
-                    </div>
-                    <span className="flex items-center gap-1.5 text-sm font-body font-medium text-primary group-hover:gap-3 transition-all">
-                      Ver detalhes <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+
+      <Section>
+        <Container className="grid gap-8 lg:grid-cols-12">
+          <aside className="space-y-4 lg:col-span-4">
+            <Panel className="space-y-3">
+              <h2 className="font-display text-2xl font-bold text-zinc-900">Mapa de capacidades</h2>
+              <p className="text-sm text-zinc-600">Cada divisão opera com equipe e método próprios, integrados por uma governança técnica única.</p>
+            </Panel>
+          </aside>
+
+          <div className="lg:col-span-8">
+            <div className="divide-y divide-zinc-200 rounded-3xl border border-zinc-200 bg-white">
+              {businessAreas.map((area, index) => (
+                <Link
+                  key={area.slug}
+                  href={`/nossos-negocios/${area.slug}`}
+                  className="group grid gap-4 px-5 py-5 transition hover:bg-zinc-50 md:grid-cols-[56px_1fr_auto] md:items-center"
+                >
+                  <span className="font-mono text-xs text-zinc-400">{String(index + 1).padStart(2, "0")}</span>
+                  <div className="space-y-2">
+                    <h3 className="font-display text-2xl font-bold text-zinc-900">{area.name}</h3>
+                    <p className="text-sm text-zinc-600">{area.shortDescription}</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary group-hover:gap-2">
+                    Detalhes <ArrowRight className="size-4" />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </>
+        </Container>
+      </Section>
+    </main>
   );
 }
