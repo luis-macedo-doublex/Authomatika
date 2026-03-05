@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Phone, Youtube } from "lucide-react";
 import { company } from "@/lib/data/company";
 
@@ -47,11 +48,14 @@ export function SiteFooter() {
         <div className="grid gap-12 border-b border-zinc-800 py-16 lg:grid-cols-12">
           {/* Brand column */}
           <div className="lg:col-span-4">
-            <div className="mb-5 flex items-center gap-2.5">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary">
-                <span className="font-display text-sm font-bold text-white tracking-tight">A</span>
-              </div>
-              <span className="font-display text-base font-bold text-white tracking-tight">Authomathika</span>
+            <div className="mb-5">
+              <Image
+                src="https://www.authomathika.com.br/public/img/configuracoes/logo_authomathika_37AiN16Va6j5U0LvSJU2DPRHt.webp"
+                alt="Authomathika"
+                width={160}
+                height={40}
+                className="h-8 w-auto brightness-0 invert"
+              />
             </div>
             <p className="mb-2 text-sm font-medium text-zinc-200">
               Engenharia integradora para sistemas industriais críticos.

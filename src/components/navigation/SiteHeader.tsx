@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
   Menu,
@@ -87,23 +88,20 @@ export function SiteHeader() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5"
+          className="flex shrink-0 items-center"
           onClick={() => {
             closeMega();
             setMobileOpen(false);
           }}
         >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary">
-            <span className="font-display text-sm font-bold tracking-tight text-white">A</span>
-          </div>
-          <div className="leading-none">
-            <p className="font-display text-[0.95rem] font-bold tracking-tight text-zinc-900">
-              Authomathika
-            </p>
-            <p className="mt-0.5 text-[9px] uppercase tracking-[0.18em] text-zinc-400">
-              Engenharia Integrada
-            </p>
-          </div>
+          <Image
+            src="https://www.authomathika.com.br/public/img/configuracoes/logo_authomathika_37AiN16Va6j5U0LvSJU2DPRHt.webp"
+            alt="Authomathika"
+            width={160}
+            height={40}
+            className="h-9 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
