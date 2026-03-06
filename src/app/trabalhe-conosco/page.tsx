@@ -7,6 +7,8 @@ import { Container, Panel, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Trabalhe Conosco",
+  description:
+    "Faça parte da equipe da Authomathika. Oportunidades para profissionais de engenharia elétrica, automação industrial e áreas correlatas em Sertãozinho, SP.",
 };
 
 const pillars = ["Foco em resultado", "Ambiente colaborativo", "Tecnologia aplicada", "Crescimento profissional"];

@@ -5,6 +5,8 @@ import { Container, Eyebrow, Panel, Section } from "@/components/site/primitives
 
 export const metadata: Metadata = {
   title: "Visão Corporativa",
+  description:
+    "Conheça os pilares que orientam as decisões técnicas, contratuais e relacionais da Authomathika: missão, visão, valores e compromisso com qualidade e sustentabilidade.",
 };
 
 export default function VisaoCorporativaPage() {

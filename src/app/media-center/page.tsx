@@ -6,6 +6,8 @@ import { Container, Section } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "Media Center",
+  description:
+    "Acompanhe as notícias institucionais e conteúdos técnicos da Authomathika sobre automação industrial, engenharia elétrica e energias renováveis.",
 };
 
 const sections = [
@@ -27,7 +29,7 @@ export default function MediaCenterPage() {
         <Container className="grid gap-4 md:grid-cols-2">
           {sections.map((section) => (
             <Link key={section.title} href={section.href} className="group rounded-3xl border border-zinc-200 bg-white p-6 transition hover:bg-zinc-50">
-              <div className="mb-4 inline-flex size-12 items-center justify-center rounded-lg border border-indigo-200 bg-indigo-50 text-primary">
+              <div className="mb-4 inline-flex size-12 items-center justify-center rounded-lg border border-primary/20 bg-primary/8 text-primary">
                 <section.Icon className="size-6" />
               </div>
               <h2 className="font-display text-3xl font-bold text-zinc-900">{section.title}</h2>

@@ -72,9 +72,6 @@ export const metadata: Metadata = {
       "Empresa completa de engenharia integradora desde 1999. Automação industrial, elétrica e energias renováveis em Sertãozinho, SP.",
     images: [OG_IMAGE],
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
   verification: {
     // Add Google Search Console verification token here when available
     // google: "your-verification-token",
@@ -93,6 +90,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <Script
           id="schema-organization"
           type="application/ld+json"
@@ -107,8 +106,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none"
+        >
+          Pular para o conteúdo principal
+        </a>
         <SiteHeader />
-        <div>{children}</div>
+        <div id="main-content">{children}</div>
         <SiteFooter />
       </body>
     </html>

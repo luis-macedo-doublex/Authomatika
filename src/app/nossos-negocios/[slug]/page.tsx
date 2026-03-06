@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { businessAreas, getBusinessArea } from "@/lib/data/businesses";
 import { serviceSchema } from "@/lib/schemas";
 import { PageIntro } from "@/components/layout/PageIntro";
-import { Container, Eyebrow, Panel, Section } from "@/components/site/primitives";
+import { Container, Panel, Section } from "@/components/site/primitives";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -58,26 +58,28 @@ export default async function BusinessPage({ params }: Props) {
         <Container className="grid gap-8 lg:grid-cols-12">
           <div className="space-y-6 lg:col-span-8">
             <Panel className="space-y-4">
-              <Eyebrow>Contexto técnico</Eyebrow>
+              <h2 className="mono-label">Contexto técnico</h2>
               <p className="text-zinc-600">{area.description}</p>
             </Panel>
 
             <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white">
-              <div className="border-b border-zinc-200 px-5 py-3 text-xs uppercase tracking-[0.14em] text-zinc-500">Serviços e soluções</div>
-              <div className="divide-y divide-zinc-200">
+              <h2 className="border-b border-zinc-200 px-5 py-3 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                Serviços e soluções
+              </h2>
+              <ol className="divide-y divide-zinc-200">
                 {area.services.map((item, idx) => (
-                  <div key={item} className="grid gap-2 px-5 py-4 md:grid-cols-[48px_1fr] md:items-center">
+                  <li key={item} className="grid gap-2 px-5 py-4 md:grid-cols-[48px_1fr] md:items-center">
                     <span className="font-mono text-xs text-zinc-400">{String(idx + 1).padStart(2, "0")}</span>
                     <span className="text-sm text-zinc-700">{item}</span>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </div>
 
           <aside className="space-y-6 lg:col-span-4">
             <Panel className="space-y-3">
-              <Eyebrow>Indicadores da divisão</Eyebrow>
+              <h2 className="mono-label">Indicadores da divisão</h2>
               {area.metrics.map((metric) => (
                 <div key={metric.label} className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
                   <div className="text-xs uppercase tracking-[0.14em] text-zinc-500">{metric.label}</div>

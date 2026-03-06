@@ -34,10 +34,10 @@ const columns = [
 ];
 
 const socials = [
-  { href: company.social.linkedin, Icon: Linkedin, label: "LinkedIn" },
-  { href: company.social.instagram, Icon: Instagram, label: "Instagram" },
-  { href: company.social.facebook, Icon: Facebook, label: "Facebook" },
-  { href: company.social.youtube, Icon: Youtube, label: "YouTube" },
+  { href: company.social.linkedin, Icon: Linkedin, label: "LinkedIn da Authomathika" },
+  { href: company.social.instagram, Icon: Instagram, label: "Instagram da Authomathika" },
+  { href: company.social.facebook, Icon: Facebook, label: "Facebook da Authomathika" },
+  { href: company.social.youtube, Icon: Youtube, label: "YouTube da Authomathika" },
 ];
 
 export function SiteFooter() {
